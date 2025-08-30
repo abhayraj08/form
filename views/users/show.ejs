@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show page</title>
+</head>
+<body>
+    
+
+    <h1><%= user.name %></h1>
+    <b>Email</b> : <%= user.email %> <br>
+    <b>Education</b> : <%= user.education %> <br>
+    <b>Skills</b> : <%= user.skills %> <br>
+    <b>Projects</b> : <% for(let project of user.projects) {%>
+                        <%= project.title %>
+                      <% } %> <br>
+    <b>Works</b> : <% for(let work of user.works) {%>
+                        <%= work.company %>
+                    <% } %>
+    
+    <br><br>
+    <a href="/users/<%= user._id %>/edit">Edit</a> <br>
+    <form action="/users/<%= user._id %>?_method=DELETE" method="POST">
+        <button>DELETE</button>
+    </form> <br> <br>
+    <a href="/users">Go back</a>
+
+</body>
+</html>

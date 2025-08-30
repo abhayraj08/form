@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit page</title>
+</head>
+
+<body>
+
+
+    <h2>Edit User details :</h2>
+    <form action="/users/<%= user._id %>?_method=PUT" method="POST">
+
+        <!-- Basic Info -->
+        <div class="section">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="user[name]" value="<%= user.name %>" required> <br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="user[email]" value="<%= user.email %>" required> <br>
+
+            <label for="education">Education:</label>
+            <input type="text" id="education" name="user[education]" value="<%= user.education %>"> <br>
+        </div>
+
+        <!-- Skills -->
+        <div class="section">
+            <label>Skills (comma separated):</label>
+            <input type="text" name="user[skills]" value="<%= user.skills[0] %>">
+        </div> <br>
+
+        <!-- Projects -->
+        <div class="section">
+            <h3>Projects</h3>
+            <div>
+                <label for="projectTitle">Project Title:</label>
+                <input type="text" name="user[projects][0][title]" id="projectTitle"
+                    value="<%= user.projects[0].title %>">
+            </div>
+            <div>
+                <label for="projectDescription">Description:</label>
+                <textarea name="user[projects][0][description]"
+                    id="projectDescription"><%= user.projects[0].description %></textarea>
+            </div>
+            <div>
+                <label for="projectLink">Links:</label>
+                <input type="url" name="user[projects][0][link]" id="projectLink" value="<%= user.projects[0].link %>">
+            </div>
+        </div> <br>
+
+        <!-- Work -->
+        <div class="section">
+            <h3>Work Experience</h3>
+            <label>Company:</label>
+            <input type="text" name="user[works][0][company]" value="<%= user.works[0].company %>"> <br>
+
+            <label>Role:</label>
+            <input type="text" name="user[works][0][role]" value="<%= user.works[0].role %>"> <br>
+
+            <label>Start Date:</label>
+            <input type="date" name="user[works][0][startDate]" value="<%= user.works[0].startDate %>"> <br>
+
+            <label>End Date:</label>
+            <input type="date" name="user[works][0][endDate]" value="<%= user.works[0].endDate %>"> <br>
+
+            <label>Description:</label>
+            <textarea name="user[works][0][description]"><%= user.works[0].description %></textarea>
+        </div>
+
+        <!-- Links -->
+        <div class="section">
+            <h3>Links</h3>
+            <label>GitHub:</label>
+            <input type="url" name="user[links][github]" value="<%= user.links.github %>"> <br>
+
+            <label>LinkedIn:</label>
+            <input type="url" name="user[links][linkedin]" value="<%= user.links.linkedin %>">> <br>
+
+            <label>Portfolio:</label>
+            <input type="url" name="user[links][portfolio]" value="<%= user.links.portfolio %>">> <br>
+        </div>
+
+        <button type="submit">Update User</button>
+    </form>
+
+    <br><br>
+    <a href="/users/<%= user._id %>">Go back</a>
+</body>
+
+</html>
