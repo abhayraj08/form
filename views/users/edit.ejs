@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit page</title>
-</head>
-
-<body>
-
+<% layout('layouts/boilerplate') %>
 
     <h2>Edit User details :</h2>
     <form action="/users/<%= user._id %>?_method=PUT" method="POST">
@@ -87,6 +77,3 @@
 
     <br><br>
     <a href="/users/<%= user._id %>">Go back</a>
-</body>
-
-</html>
