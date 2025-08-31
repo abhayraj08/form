@@ -4,7 +4,6 @@ if (process.env.NODE_ENV !== "production") {
 
 
 const express = require('express');
-const port = 3000;
 const path = require('path');
 const mongoose = require('mongoose');
 const User = require('./models/users');
@@ -136,6 +135,8 @@ app.delete('/users/:id', async (req, res) => {
 // })
 
 
+// Starting server
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`App is running on ${port}`);
 })
