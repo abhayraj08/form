@@ -17,22 +17,25 @@
                     <input class="form-control" type="text" id="education" name="user[education]"> <br>
 
                     <label class="form-label">Skills (comma separated):</label>
-                    <input class="form-control" type="text" name="user[skills]">
+                    <input class="form-control" type="text" name="user[skills]"
+                        value="<%= typeof user !== 'undefined' && user.skills ? user.skills.join(', ') : '' %>">
                 </div> <br>
 
                 <!-- Projects -->
-                <div class="section">
+                <div class="section projects-container">
                     <h3>Projects</h3>
 
-                    <label class="form-label" for="projectTitle">Project Title:</label>
-                    <input class="form-control" type="text" name="user[projects][0][title]" id="projectTitle">
+                    <label class="form-label" for="projectTitle0">Project Title:</label>
+                    <input class="form-control" type="text" name="user[projects][0][title]" id="projectTitle0">
 
-                    <label class="form-label" for="projectDescription">Description:</label>
-                    <textarea class="form-control" name="user[projects][0][description]" id="projectDescription"></textarea>
+                    <label class="form-label" for="projectDescription0">Description:</label>
+                    <textarea class="form-control" name="user[projects][0][description]"
+                        id="projectDescription0"></textarea>
 
-                    <label class="form-label" for="projectLink">Links:</label>
-                    <input class="form-control" type="url" name="user[projects][0][link]" id="projectLink">
+                    <label class="form-label" for="projectLink0">Links:</label>
+                    <input class="form-control" type="url" name="user[projects][0][link]" id="projectLink0">
 
+                    <!-- <button type="button" id="add-project" class="btn btn-secondary mt-2">Add Another Project</button> -->
                 </div> <br>
 
                 <!-- Work -->

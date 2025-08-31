@@ -1,5 +1,11 @@
 <% layout('layouts/boilerplate') %>
 
+   <form action="/users" method="GET" class="mb-3">
+        <input type="text" name="skill" class="form-control" placeholder="Search by skill" value="<%= skill || '' %>">
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+
+
     <h1>All User data :-</h1>
 
     <% for (let user of users){ %>

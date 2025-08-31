@@ -30,23 +30,37 @@ app.get('/', (req, res) => {
 
 app.get('/users', async (req, res) => {
     try {
-        const users = await User.find({});
-        // console.log({users});
-        res.render('users/index', { users });
+        const { skill } = req.query;
+        let users;
+        if (skill) {
+            // Case-insensitive search in skills array
+            users = await User.find({ skills: { $regex: skill, $options: "i" } });
+        } else {
+            users = await User.find({});
+        }
+
+        res.render('users/index', { users, skill });
     } catch (e) {
         res.send(`index route problem hai. <br> ${e}`);
     }
 })
 
 app.get('/users/new', (req, res) => {
-    res.render('users/new');
+    res.render('users/new', { user: {} });
 })
 
 app.post('/users', async (req, res) => {
     try {
-        const user = new User(req.body.user);
-        await user.save();
-        res.redirect(`users/${user._id}`);
+        let userData = req.body.user;
+
+        // Convert skills string into array
+        if (userData.skills) {
+            userData.skills = userData.skills.split(",").map(s => s.trim());
+        }
+
+        const newUser = new User(userData);
+        await newUser.save();
+        res.redirect(`users/${newUser._id}`);
     } catch (e) {
         res.send(`new ke post route problem hai. <br> ${e}`)
     }
@@ -73,27 +87,34 @@ app.get('/users/:id/edit', async (req, res) => {
 
 app.put('/users/:id', async (req, res) => {
     try {
-        const {id} = req.params;
-        const user = await User.findByIdAndUpdate(id, req.body.user);
+        const { id } = req.params;
+        let userData = req.body.user;
+
+        // Convert skills string into array
+        if (userData.skills) {
+            userData.skills = userData.skills.split(",").map(s => s.trim());
+        }
+
+        const user = await User.findByIdAndUpdate(id, userData);
         res.redirect(`/users/${user._id}`);
     } catch (e) {
-        res.send(`edit ke put route me problem hai. <br> ${e}`); 
+        res.send(`edit ke put route me problem hai. <br> ${e}`);
     }
 })
 
 app.delete('/users/:id', async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         await User.findByIdAndDelete(id);
         res.redirect(`/users`);
     } catch (e) {
-        res.send(`delete route me problem hai. <br> ${e}`); 
+        res.send(`delete route me problem hai. <br> ${e}`);
     }
 })
 
 
 
-// seed data
+// seed dummy data
 // app.get('/makeuser', async (req, res) => {
 //     const user = new User({name: 'Tim', 
 //         email: 'tim@gmail.com', 
