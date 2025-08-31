@@ -1,19 +1,73 @@
 <% layout('layouts/boilerplate') %>
 
-    <h1><%= user.name %></h1>
-    <b>Email</b> : <%= user.email %> <br>
-    <b>Education</b> : <%= user.education %> <br>
-    <b>Skills</b> : <%= user.skills %> <br>
-    <b>Projects</b> : <% for(let project of user.projects) {%>
-                        <%= project.title %>
-                      <% } %> <br>
-    <b>Works</b> : <% for(let work of user.works) {%>
-                        <%= work.company %>
+    <div class="container mt-4">
+        <div class="card shadow p-2">
+            <div class="card-body">
+
+                <!-- Basic Info -->
+                <h1 class="mb-3"><%= user.name %></h1>
+                <p><b>Email: </b><%= user.email %></p>
+                <p><b>Education: </b><%= user.education %></p>
+                <p><b>Skills: </b><%= user.skills %></p>
+
+                <!-- Projects -->
+                <p><b>Projects:</b></p>
+                <% if (user.projects[0].title) { %>
+                    <ul>
+                        <% for(let project of user.projects) { %>
+                            <li>
+                                <b><%= project.title %></b><br>
+                                <%= project.description || "" %><br>
+                                <% if (project.link && project.link.length) { %>
+                                    <a href="<%= project.link %>" target="_blank">Live</a>
+                                <% } %>
+                            </li>
+                        <% } %>
+                    </ul>
+                <% } else { %>
+                    <p class="text-muted">No projects</p>
+                <% } %>
+
+                <!-- Works -->
+                <p class="mb-2"><b>Works:</b></p>
+                <% if (user.works[0].company) { %>
+                    <ul class="ms-3">
+                        <% for(let work of user.works) { %>
+                            <li>
+                                <b><%= work.company %></b> — <%= work.role %><br>
+                                <small>
+                                    <%= work.startDate ? work.startDate.toISOString().split("T")[0] : "" %>- 
+                                    <%= work.endDate ? work.endDate.toISOString().split("T")[0] : "Present" %>
+                                </small><br>
+                                <%= work.description || "" %>
+                            </li>
+                        <% } %>
+                    </ul>
+                <% } else { %>
+                    <p class="text-muted">No work experience</p>
+                <% } %>
+
+                <!-- Links -->
+                <p><b>Links:</b></p>
+                <ul>
+                    <% if(user.links && user.links.github) { %>
+                        <li><a href="<%= user.links.github %>" target="_blank">GitHub</a></li>
                     <% } %>
-    
-    <br><br>
-    <a href="/users/<%= user._id %>/edit">Edit</a> <br>
-    <form action="/users/<%= user._id %>?_method=DELETE" method="POST">
-        <button>DELETE</button>
-    </form> <br> <br>
-    <a href="/users">Go back</a>
+                    <% if(user.links && user.links.linkedin) { %>
+                        <li><a href="<%= user.links.linkedin %>" target="_blank">LinkedIn</a></li>
+                    <% } %>
+                    <% if(user.links && user.links.portfolio) { %>
+                        <li><a href="<%= user.links.portfolio %>" target="_blank">Portfolio</a></li>
+                    <% } %>
+                </ul>
+
+                <!-- Buttons -->
+                <div class="mt-4">
+                    <a href="/users/<%= user._id %>/edit" class="btn btn-warning">Edit</a>
+                    <form action="/users/<%= user._id %>?_method=DELETE" method="POST" class="d-inline">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
