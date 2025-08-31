@@ -1,3 +1,8 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
+
 const express = require('express');
 const port = 3000;
 const path = require('path');
@@ -6,11 +11,12 @@ const User = require('./models/users');
 const methodOverride = require('method-override'); // Put & Delete
 const ejsMate = require('ejs-mate');
 
+
 // Database Connection
-mongoose.connect('mongodb://127.0.0.1:27017/playground')
+const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/playground';
+mongoose.connect(dbUrl)
     .then(() => console.log("Database connected"))
     .catch((e) => console.log(e))
-
 
 const app = express();
 
